@@ -9,7 +9,7 @@ function App() {
      <Switch>
        <Route exact path='/' component={PostList} />
        <Route exact path='/add' component={AddPost} />
-       <Route exact path='/edit:id' component={UpdatePost} />
+       <Route exact path='/edit/:id' component={UpdatePost} />
 
 
      </Switch>

@@ -1,14 +1,24 @@
 import React, { useState } from "react";
+import { useMutation } from "react-query";
+import {CreatePost} from "../api"
+import {useParams,useHistory} from "react-router-dom"
+
 
 const AddPost = () => {
   const [title, settitle] = useState("");
   const [body, setbody] = useState("");
   const [userId, setuserId] = useState(0);
+  const {mutateAsync,isLoading} = useMutation(CreatePost)
+  const history=  useHistory()
 
-
+  const handleSubmit=async()=>{
+    await mutateAsync({id:11,title,body,userId})
+    console.log('created')
+    history.push('/')
+  }
   return (
     <div id="add-post">
-      <form>
+      <form onSubmit={handleSubmit}   >
         <input
           class="form-control form-control-lg"
           type="text"
@@ -31,7 +41,7 @@ const AddPost = () => {
           onChange={(e) => setuserId(e.target.value)}
         />
 
-        <button type="button" id="btn" class="btn btn-success rounded">
+        <button type="button" id="btn" class="btn btn-success rounded" onClick={handleSubmit} >
           Submit
         </button>
       </form>

@@ -20,7 +20,7 @@ export const deletePost = async (id) => {
 };
 
 //create a post
-export const AddPost = async (newP) => {
+export const CreatePost = async (newP) => {
   const response = await fetch(`${process.env.REACT_APP_API_SERVER}posts`, {
     method: "POST",
     body: JSON.stringify(newP),
@@ -28,9 +28,9 @@ export const AddPost = async (newP) => {
       "Content-type": "application/json; charset=UTF-8",
     },
   })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
   if (!response.ok) throw new Error("can't fetch");
+ return response.json()
+
 };
 //update a post
 export const UpdatePost = async ({ id, ...newP }) => {

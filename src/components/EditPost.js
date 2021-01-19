@@ -5,21 +5,22 @@ import { getPost } from "../api";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 
-const UpdatePost = () => {
+const UpdatePost = (props) => {
  const {id}=useParams
  const history = useHistory
-const {data,isError,isLoading,error} = useQuery(['book',{id}],getPost)
+const {post} = (props.location && props.location.state) || {};
+
 const {mutateAsync,isLoading:isMutation}= useMutation(UpdatePost)
   
-const handleSub=async(title,body,uId)=>{
+const handleSub=async(title,body,)=>{
     const data ={id,title,body,userId}
     await mutateAsync({...data,id})
     history.push('/')
 }
 
-const [title, settitle] = useState("");
-const [body, setbody] = useState("");
-const [userId, setuserId] = useState(0);
+const [title, settitle] = useState(post.title);
+const [body, setbody] = useState(post.body);
+const [userId, setuserId] = useState(post.userId);
 
 // if(isError)
 // return( <div>there's an error <span>{error} </span> </div>)
@@ -61,7 +62,7 @@ return (
         />
 
         <button type="button" id="btn" class="btn btn-success rounded" 
-        onClick={()=> handleSub(title,body,userId)}  >
+        onClick={handleSub(title,body,userId)}  >
           Submit
         </button>
       </form>

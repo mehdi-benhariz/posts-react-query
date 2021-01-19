@@ -2,8 +2,11 @@ import { useMutation, useQueryClient } from "react-query";
 import { deletePost } from "../api";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
+import {Link} from "react-router-dom"
 
-const Post = ({ post: { id, title, body } }) => {
+
+const Post = ( {post}) => {
+  const {id,title,body,userId} =post
   const queryClient = useQueryClient();
   const { mutateAsync, isLoading } = useMutation(deletePost);
 
@@ -23,7 +26,15 @@ const Post = ({ post: { id, title, body } }) => {
           ?<Loader type="ThreeDots" color="white" height={80} width={80} />  
           :'delete'}
         </button>
-        <button type="button" class="btn btn-warning"><a href={`/edit${id}` } >Edit</a></button>
+        <Link to={ {
+           pathname : `/edit/${id}`,
+           state: {
+             post : post
+          } 
+          }} >
+        <button type="button" class="btn btn-warning">Edit</button>
+        </Link>
+       
       </div>
     </div>
   );
